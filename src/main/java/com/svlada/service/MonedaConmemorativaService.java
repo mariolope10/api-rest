@@ -26,6 +26,11 @@ public class MonedaConmemorativaService implements IMonedaConmemorativaService {
     public List<MonedaConmemorativa> getAllMonedasByPais(String pais) {
         return monedaDAO.getAllMonedasByPais(pais);
     }
+    
+    @Override
+    public List<MonedaConmemorativa> getAllMonedasByAno(int ano) {
+        return monedaDAO.getAllMonedasByAno(ano);
+    }
 
     @Override
     public MonedaConmemorativa getMonedaById(int idMoneda) {

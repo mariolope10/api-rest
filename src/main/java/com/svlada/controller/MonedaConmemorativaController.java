@@ -9,6 +9,7 @@ import com.svlada.entity.Pais;
 import com.svlada.service.IMonedaConmemorativaService;
 import com.svlada.service.IPaisService;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class MonedaConmemorativaController {
 
     @Autowired
     private IMonedaConmemorativaService monedaService;
-    
+
     @Autowired
     private IPaisService paisService;
 
@@ -43,7 +44,7 @@ public class MonedaConmemorativaController {
         MonedaConmemorativa moneda = monedaService.getMonedaById(id);
         return new ResponseEntity<>(moneda, HttpStatus.OK);
     }
-    
+
     @GetMapping("conmemorativa/search")
     public ResponseEntity<List<MonedaConmemorativa>> getAllMonedasByPais(@RequestParam("pais") String pais) {
         List<MonedaConmemorativa> list = monedaService.getAllMonedasByPais(pais);
@@ -51,21 +52,38 @@ public class MonedaConmemorativaController {
     }
 
     @GetMapping("conmemorativas")
-    public ResponseEntity<List<Object>> getAllMonedas() {
-        List<Object> listadoMonedasPorPais = new ArrayList<>();
-        
-        List<Pais> listadoPaises = paisService.getAllPaises();
-        listadoPaises.forEach((pais) -> {
-            List<MonedaConmemorativa> listadoMonedas = monedaService.getAllMonedasByPais(pais.getCodigo());
+    public ResponseEntity<List<Object>> getAllMonedas(@RequestParam("orden") String orden) {
+        List<Object> listado = new ArrayList<>();
+
+        if (orden.equals("pais")) {
+            List<Pais> listadoPaises = paisService.getAllPaises();
+            listadoPaises.forEach((pais) -> {
+                List<MonedaConmemorativa> listadoMonedas = monedaService.getAllMonedasByPais(pais.getCodigo());
+
+                Map<String, Object> map = new LinkedHashMap<>();
+                map.put("pais", pais.getNombre());
+                map.put("monedas", listadoMonedas);
+
+                listado.add(map);
+            });
             
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("pais", pais.getNombre());
-            map.put("monedas", listadoMonedas);
+        } else {
+            int anoSalidaEuro = 2002;
+            int anoActual = Calendar.getInstance().get(Calendar.YEAR);
             
-            listadoMonedasPorPais.add(map);
-        });
-        
-        return new ResponseEntity<>(listadoMonedasPorPais, HttpStatus.OK);
+            for (int ano = anoActual; ano >= anoSalidaEuro; ano--) {
+                List<MonedaConmemorativa> listadoMonedas = monedaService.getAllMonedasByAno(ano);
+
+                Map<String, Object> map = new LinkedHashMap<>();
+                map.put("ano", ano);
+                map.put("monedas", listadoMonedas);
+
+                listado.add(map);
+            }
+            
+        }
+
+        return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
     @PostMapping("conmemorativa")

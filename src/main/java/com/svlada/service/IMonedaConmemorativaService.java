@@ -12,6 +12,8 @@ public interface IMonedaConmemorativaService {
     List<MonedaConmemorativa> getAllMonedas();
     
     List<MonedaConmemorativa> getAllMonedasByPais(String pais);
+    
+    List<MonedaConmemorativa> getAllMonedasByAno(int ano);
 
     MonedaConmemorativa getMonedaById(int idMoneda);
 

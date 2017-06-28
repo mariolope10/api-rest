@@ -34,6 +34,14 @@ public class MonedaConmemorativaDAO implements IMonedaConmemorativaDAO {
     }
     
     @Override
+    public List<MonedaConmemorativa> getAllMonedasByAno(int ano) {
+        String hql = "FROM MonedaConmemorativa WHERE YEAR(fecha_emision) = ? ORDER BY id";
+        return (List<MonedaConmemorativa>) entityManager.createQuery(hql)
+                .setParameter(1, ano)
+                .getResultList();
+    }
+    
+    @Override
     public MonedaConmemorativa getMonedaById(int idMoneda) {
         return entityManager.find(MonedaConmemorativa.class, idMoneda);
     }

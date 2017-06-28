@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.svlada.service.IMonedaComunService;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("api/moneda")
@@ -48,6 +49,7 @@ public class MonedaComunController {
     }
 
     @PostMapping("comun")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> addMoneda(@RequestBody MonedaComun moneda, UriComponentsBuilder builder) {
         boolean flag = monedaService.addMoneda(moneda);
         if (flag == false) {
@@ -59,12 +61,14 @@ public class MonedaComunController {
     }
 
     @PutMapping("comun")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<MonedaComun> updateMoneda(@RequestBody MonedaComun moneda) {
         monedaService.updateMoneda(moneda);
         return new ResponseEntity<>(moneda, HttpStatus.OK);
     }
 
     @DeleteMapping("comun/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteMoneda(@PathVariable("id") Integer id) {
         monedaService.deleteMoneda(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
