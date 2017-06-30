@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,8 +25,9 @@ public class MonedaConmemorativa implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "pais")
-    private String pais;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais")
+    private Pais pais;
     
     @Column(name = "fecha_emision")
     @Temporal(TemporalType.TIMESTAMP)
@@ -46,8 +50,12 @@ public class MonedaConmemorativa implements Serializable {
         this.id = id;
     }
 
-    public String getPais() {
+    public Pais getPais() {
         return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
     }
 
     public Date getFecha_emision() {
@@ -56,10 +64,6 @@ public class MonedaConmemorativa implements Serializable {
 
     public void setFecha_emision(Date fecha_emision) {
         this.fecha_emision = fecha_emision;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
     }
 
     public String getMotivo() {

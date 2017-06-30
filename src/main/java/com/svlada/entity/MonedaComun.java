@@ -26,13 +26,14 @@ public class MonedaComun implements Serializable {
     @Column(name = "valor")
     private String valor;
 
-    @Column(name = "pais")
-    private String pais;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais")
+    private Pais pais;
     
     @Column(name = "motivo")
     private String motivo;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_id")
     @JsonBackReference
     private Serie serie;
@@ -53,11 +54,11 @@ public class MonedaComun implements Serializable {
         this.valor = valor;
     }
 
-    public String getPais() {
+    public Pais getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(Pais pais) {
         this.pais = pais;
     }
 

@@ -1,4 +1,4 @@
-package com.svlada.profile.endpoint;
+package com.svlada.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,7 +16,7 @@ import com.svlada.security.model.UserContext;
  * Aug 4, 2016
  */
 @RestController
-public class ProfileEndpoint {
+public class UsuarioController {
     @RequestMapping(value="/api/me", method=RequestMethod.GET)
     public @ResponseBody UserContext get(JwtAuthenticationToken token) {
         return (UserContext) token.getPrincipal();

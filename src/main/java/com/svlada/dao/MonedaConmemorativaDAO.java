@@ -27,9 +27,9 @@ public class MonedaConmemorativaDAO implements IMonedaConmemorativaDAO {
     
     @Override
     public List<MonedaConmemorativa> getAllMonedasByPais(String pais) {
-        String hql = "FROM MonedaConmemorativa WHERE pais = ? ORDER BY id";
+        String hql = "SELECT mc FROM MonedaConmemorativa mc INNER JOIN mc.pais p WHERE p.codigo = :codigo ORDER BY id";
         return (List<MonedaConmemorativa>) entityManager.createQuery(hql)
-                .setParameter(1, pais)
+                .setParameter("codigo", pais)
                 .getResultList();
     }
     

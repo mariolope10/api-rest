@@ -11,11 +11,11 @@ public interface IPaisDAO {
 
     List<Pais> getAllPaises();
     
-    Pais getPaisById(int idPais);
+    Pais getPaisByCodigo(String codigo);
 
     void addPais(Pais pais);
 
     void updatePais(Pais pais);
 
-    void deletePais(int idPais);
+    void deletePais(String codigo);
 }

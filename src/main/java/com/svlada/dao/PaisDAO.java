@@ -21,13 +21,13 @@ public class PaisDAO implements IPaisDAO {
 
     @Override
     public List<Pais> getAllPaises() {
-        String hql = "FROM Pais ORDER BY id";
+        String hql = "FROM Pais ORDER BY codigo";
         return (List<Pais>) entityManager.createQuery(hql).getResultList();
     }
     
     @Override
-    public Pais getPaisById(int idPais) {
-        return entityManager.find(Pais.class, idPais);
+    public Pais getPaisByCodigo(String codigo) {
+        return entityManager.find(Pais.class, codigo);
     }
 
     @Override
@@ -37,14 +37,14 @@ public class PaisDAO implements IPaisDAO {
 
     @Override
     public void updatePais(Pais pais) {
-        Pais pacl = getPaisById(pais.getId());
+        Pais pacl = getPaisByCodigo(pais.getCodigo());
         pacl.setCodigo(pais.getCodigo());
         pacl.setNombre(pais.getNombre());
         entityManager.flush();
     }
 
     @Override
-    public void deletePais(int idPais) {
-        entityManager.remove(getPaisById(idPais));
+    public void deletePais(String codigo) {
+        entityManager.remove(getPaisByCodigo(codigo));
     }
 }

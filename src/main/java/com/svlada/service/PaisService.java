@@ -23,8 +23,8 @@ public class PaisService implements IPaisService {
     }
 
     @Override
-    public Pais getPaisById(int idPais) {
-        return paisDAO.getPaisById(idPais);
+    public Pais getPaisByCodigo(String codigo) {
+        return paisDAO.getPaisByCodigo(codigo);
     }
 
     @Override
@@ -39,8 +39,8 @@ public class PaisService implements IPaisService {
     }
 
     @Override
-    public void deletePais(int idPais) {
-        paisDAO.deletePais(idPais);
+    public void deletePais(String codigo) {
+        paisDAO.deletePais(codigo);
     }
 
 }

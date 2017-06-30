@@ -28,9 +28,9 @@ public class PaisController {
     @Autowired
     private IPaisService paisService;
 
-    @GetMapping("pais/{id}")
-    public ResponseEntity<Pais> getPaisById(@PathVariable("id") Integer id) {
-        Pais pais = paisService.getPaisById(id);
+    @GetMapping("pais/{codigo}")
+    public ResponseEntity<Pais> getPaisById(@PathVariable("codigo") String codigo) {
+        Pais pais = paisService.getPaisByCodigo(codigo);
         return new ResponseEntity<>(pais, HttpStatus.OK);
     }
 
@@ -47,7 +47,7 @@ public class PaisController {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(builder.path("/pais/{id}").buildAndExpand(pais.getId()).toUri());
+        headers.setLocation(builder.path("/pais/{codigo}").buildAndExpand(pais.getCodigo()).toUri());
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
@@ -57,9 +57,9 @@ public class PaisController {
         return new ResponseEntity<>(pais, HttpStatus.OK);
     }
 
-    @DeleteMapping("pais/{id}")
-    public ResponseEntity<Void> deleteMoneda(@PathVariable("id") Integer id) {
-        paisService.deletePais(id);
+    @DeleteMapping("pais/{codigo}")
+    public ResponseEntity<Void> deleteMoneda(@PathVariable("codigo") String codigo) {
+        paisService.deletePais(codigo);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

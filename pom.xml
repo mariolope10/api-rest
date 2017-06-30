@@ -8,7 +8,7 @@
     <version>1</version>
     <packaging>jar</packaging>
 
-    <name>springboot-security-jwt</name>
+    <name>restapi</name>
     <description>Secure your API with JWT Tokens</description>
 
     <parent>
