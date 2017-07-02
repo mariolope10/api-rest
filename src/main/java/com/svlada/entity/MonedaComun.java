@@ -24,7 +24,7 @@ public class MonedaComun implements Serializable {
     private int id;
 
     @Column(name = "valor")
-    private String valor;
+    private Integer valor;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pais")
@@ -32,6 +32,9 @@ public class MonedaComun implements Serializable {
     
     @Column(name = "motivo")
     private String motivo;
+    
+    @Column(name = "imagen")
+    private String imagen;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_id")
@@ -46,11 +49,11 @@ public class MonedaComun implements Serializable {
         this.id = id;
     }
 
-    public String getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 
@@ -68,6 +71,14 @@ public class MonedaComun implements Serializable {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public Serie getSerie() {
