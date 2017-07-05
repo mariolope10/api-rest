@@ -26,10 +26,10 @@ public class SerieDAO implements ISerieDAO {
     }
     
     @Override
-    public List<Serie> getAllSeriesByPais(String pais) {
-        String hql = "FROM Serie WHERE pais = ? ORDER BY id";
+    public List<Serie> getAllSeriesByPais(int idPais) {
+        String hql = "SELECT s FROM Serie s INNER JOIN s.pais p WHERE p.id = :id";
         return (List<Serie>) entityManager.createQuery(hql)
-                .setParameter(1, pais)
+                .setParameter("id", idPais)
                 .getResultList();
     }
     
@@ -47,7 +47,6 @@ public class SerieDAO implements ISerieDAO {
     public void updateSerie(Serie serie) {
         Serie sercl = getSerieById(serie.getId());
         sercl.setPais(serie.getPais());
-        sercl.setOrden(serie.getOrden());
         entityManager.flush();
     }
 

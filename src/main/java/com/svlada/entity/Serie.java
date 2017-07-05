@@ -6,11 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 @Entity
@@ -24,11 +26,9 @@ public class Serie implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "orden")
-    private Integer orden;
-
-    @Column(name = "pais")
-    private String pais;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais_id")
+    private Pais pais;
     
     @Column(name = "fecha_desde")
     private Integer fecha_desde;
@@ -41,15 +41,8 @@ public class Serie implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    @OrderBy("valor ASC")
-    private List<MonedaComun> monedas = new ArrayList<>();
-    
-    @OneToMany(
-            mappedBy = "serie",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Tirada> tiradas = new ArrayList<>();
+    //@OrderBy("valor ASC")
+    private List<SerieAno> monedas_ano = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -59,19 +52,11 @@ public class Serie implements Serializable {
         this.id = id;
     }
 
-    public Integer getOrden() {
-        return orden;
-    }
-
-    public void setOrden(Integer orden) {
-        this.orden = orden;
-    }
-
-    public String getPais() {
+    public Pais getPais() {
         return pais;
     }
 
-    public void setPais(String pais) {
+    public void setPais(Pais pais) {
         this.pais = pais;
     }
 
@@ -91,20 +76,12 @@ public class Serie implements Serializable {
         this.fecha_hasta = fecha_hasta;
     }
 
-    public List<MonedaComun> getMonedas() {
-        return monedas;
+    public List<SerieAno> getMonedas_ano() {
+        return monedas_ano;
     }
 
-    public void setMonedas(List<MonedaComun> monedas) {
-        this.monedas = monedas;
-    }
-
-    public List<Tirada> getTiradas() {
-        return tiradas;
-    }
-
-    public void setTiradas(List<Tirada> tiradas) {
-        this.tiradas = tiradas;
+    public void setMonedas_ano(List<SerieAno> monedas_ano) {
+        this.monedas_ano = monedas_ano;
     }
 
 }

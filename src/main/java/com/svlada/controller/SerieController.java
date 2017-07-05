@@ -43,19 +43,19 @@ public class SerieController {
         return new ResponseEntity<>(serie, HttpStatus.OK);
     }
 
-    @GetMapping("serie/search")
+    /*@GetMapping("serie/search")
     public ResponseEntity<List<Serie>> getAllSeriesByPais(@RequestParam("pais") String pais) {
         List<Serie> list = serieService.getAllSeriesByPais(pais);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping("series")
-    public ResponseEntity<List<Object>> getAllSeries() {
+    public ResponseEntity<List<Object>> getAllSeriesGroupByPais() {
         List<Object> listado = new ArrayList<>();
 
         List<Pais> listadoPaises = paisService.getAllPaises();
         listadoPaises.forEach((pais) -> {
-            List<Serie> listadoSeries = serieService.getAllSeriesByPais(pais.getCodigo());
+            List<Serie> listadoSeries = serieService.getAllSeriesByPais(pais.getId());
 
             Map<String, Object> map = new LinkedHashMap<>();
             map.put("pais", pais.getNombre());
@@ -63,9 +63,16 @@ public class SerieController {
 
             listado.add(map);
         });
-
+        
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
+    
+    /*@GetMapping("series")
+    public ResponseEntity<List<Serie>> getAllSeries() {
+        List<Serie> listado = serieService.getAllSeries();
+
+        return new ResponseEntity<>(listado, HttpStatus.OK);
+    }*/
 
     @PostMapping("serie")
     public ResponseEntity<Void> addSerie(@RequestBody Serie serie, UriComponentsBuilder builder) {

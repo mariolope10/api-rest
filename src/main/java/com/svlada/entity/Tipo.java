@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.svlada.entity;
 
 import java.io.Serializable;
@@ -8,20 +13,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author Mario
+ */
 @Entity
-@Table(name = "pais")
-public class Pais implements Serializable {
-
+@Table(name = "tipo")
+public class Tipo implements Serializable {
+    
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column(name = "codigo")
-    private String codigo;
-    
+
     @Column(name = "nombre")
     private String nombre;
 
@@ -33,14 +39,6 @@ public class Pais implements Serializable {
         this.id = id;
     }
 
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
     public String getNombre() {
         return nombre;
     }
@@ -48,5 +46,6 @@ public class Pais implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    
 }
