@@ -34,22 +34,19 @@ public class SerieController {
     @Autowired
     private ISerieService serieService;
 
-    @Autowired
-    private IPaisService paisService;
-
     @GetMapping("serie/{id}")
     public ResponseEntity<Serie> getSerieById(@PathVariable("id") Integer id) {
         Serie serie = serieService.getSerieById(id);
         return new ResponseEntity<>(serie, HttpStatus.OK);
     }
 
-    /*@GetMapping("serie/search")
-    public ResponseEntity<List<Serie>> getAllSeriesByPais(@RequestParam("pais") String pais) {
+    @GetMapping("series/{pais}")
+    public ResponseEntity<List<Serie>> getAllSeriesByPais(@PathVariable("pais") String pais) {
         List<Serie> list = serieService.getAllSeriesByPais(pais);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
+    }
 
-    @GetMapping("series")
+    /*@GetMapping("series")
     public ResponseEntity<List<Object>> getAllSeriesGroupByPais() {
         List<Object> listado = new ArrayList<>();
 
@@ -65,7 +62,7 @@ public class SerieController {
         });
         
         return new ResponseEntity<>(listado, HttpStatus.OK);
-    }
+    }*/
     
     /*@GetMapping("series")
     public ResponseEntity<List<Serie>> getAllSeries() {

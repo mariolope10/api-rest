@@ -26,10 +26,10 @@ public class SerieDAO implements ISerieDAO {
     }
     
     @Override
-    public List<Serie> getAllSeriesByPais(int idPais) {
-        String hql = "SELECT s FROM Serie s INNER JOIN s.pais p WHERE p.id = :id";
+    public List<Serie> getAllSeriesByPais(String codigo) {
+        String hql = "FROM Serie WHERE pais.codigo = :codigo";
         return (List<Serie>) entityManager.createQuery(hql)
-                .setParameter("id", idPais)
+                .setParameter("codigo", codigo)
                 .getResultList();
     }
     

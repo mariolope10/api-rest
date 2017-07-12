@@ -23,8 +23,8 @@ public class SerieService implements ISerieService {
     }
     
     @Override
-    public List<Serie> getAllSeriesByPais(int idPais) {
-        return serieDAO.getAllSeriesByPais(idPais);
+    public List<Serie> getAllSeriesByPais(String pais) {
+        return serieDAO.getAllSeriesByPais(pais);
     }
 
     @Override

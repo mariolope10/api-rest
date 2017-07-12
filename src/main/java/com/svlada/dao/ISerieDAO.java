@@ -11,7 +11,7 @@ public interface ISerieDAO {
 
     List<Serie> getAllSeries();
     
-    List<Serie> getAllSeriesByPais(int idPais);
+    List<Serie> getAllSeriesByPais(String pais);
 
     Serie getSerieById(int idSerie);
 
