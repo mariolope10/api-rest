@@ -1,6 +1,7 @@
 package com.svlada.dao;
 
 import com.svlada.entity.Moneda;
+import com.svlada.entity.UserMoneda;
 import java.util.List;
 
 /**
@@ -16,6 +17,8 @@ public interface IMonedaDAO {
     List<Moneda> getAllMonedasConmemorativasByPais(String pais);
     
     List<Moneda> getAllMonedasConmemorativasByAno(int ano);
+    
+    List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais);
 
     void addMoneda(Moneda moneda);
 

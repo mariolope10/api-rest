@@ -1,6 +1,7 @@
 package com.svlada.dao;
 
 import com.svlada.entity.Moneda;
+import com.svlada.entity.UserMoneda;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -35,6 +36,18 @@ public class MonedaDAO implements IMonedaDAO {
         String hql = "FROM Moneda WHERE tipo.id = 2 AND pais.codigo = :codigo";
         return (List<Moneda>) entityManager.createQuery(hql)
                 .setParameter("codigo", pais)
+                .getResultList();
+    }
+    
+    @Override
+    public List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais) {
+        String hql = "SELECT m, CASE WHEN (um IS NULL) THEN false ELSE true END "
+                + "FROM UserMoneda um "
+                + "RIGHT OUTER JOIN um.moneda m "
+                + "WHERE m.pais.codigo = ? AND m.tipo.id = 2";
+        
+        return (List<Object[]>) entityManager.createQuery(hql)
+                .setParameter(1, pais)
                 .getResultList();
     }
     

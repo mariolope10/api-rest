@@ -1,6 +1,8 @@
 package com.svlada.dao;
 
 import com.svlada.entity.User;
+import com.svlada.entity.UserMoneda;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -47,5 +49,24 @@ public class UserDAO implements IUserDAO {
     @Override
     public void deleteUser(Long idUser) {
         entityManager.remove(getUserById(idUser));
+    }
+    
+    ////////////////////////////////////////////////////////////////////////////
+    
+    @Override
+    public List<UserMoneda> getAllMonedasByUser(Long id) {
+        String hql = "FROM UserMoneda WHERE user.id = ?";
+        return (List<UserMoneda>) entityManager.createQuery(hql)
+                .setParameter(1, id)
+                .getResultList();
+    }
+    
+    @Override
+    public UserMoneda getMonedaByUser(int idMoneda, Long idUser) {
+        String hql = "FROM UserMoneda WHERE user.id = ? AND moneda.id = ?";
+        return (UserMoneda) entityManager.createQuery(hql)
+                .setParameter(1, idUser)
+                .setParameter(2, idMoneda)
+                .getSingleResult();
     }
 }

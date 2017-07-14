@@ -16,6 +16,8 @@ public interface IMonedaService {
     List<Moneda> getAllMonedasConmemorativasByPais(String pais);
     
     List<Moneda> getAllMonedasConmemorativasByAno(int ano);
+    
+    List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais);
 
     boolean addMoneda(Moneda moneda);
 

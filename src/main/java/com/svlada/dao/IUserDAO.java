@@ -1,6 +1,8 @@
 package com.svlada.dao;
 
 import com.svlada.entity.User;
+import com.svlada.entity.UserMoneda;
+import java.util.List;
 
 /**
  *
@@ -17,4 +19,10 @@ public interface IUserDAO {
     void updateUser(User user);
 
     void deleteUser(Long idUser);
+    
+    //////////////////////////////
+    
+    List<UserMoneda> getAllMonedasByUser(Long id);
+    
+    UserMoneda getMonedaByUser(int idMoneda, Long idUser);
 }

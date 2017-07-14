@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.svlada.entity.Moneda;
 import com.svlada.dao.IMonedaDAO;
+import com.svlada.entity.UserMoneda;
 
 /**
  *
@@ -35,6 +36,11 @@ public class MonedaService implements IMonedaService {
     @Override
     public List<Moneda> getAllMonedasConmemorativasByAno(int ano) {
         return monedaDAO.getAllMonedasConmemorativasByAno(ano);
+    }
+    
+    @Override
+    public List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais) {
+        return monedaDAO.getAllMonedasConmemorativasByPais_IsInCollection(pais);
     }
 
     @Override

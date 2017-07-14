@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.svlada.dao.IUserDAO;
 import com.svlada.entity.User;
+import com.svlada.entity.UserMoneda;
+import java.util.List;
 
 /**
  *
@@ -40,6 +42,16 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(Long idUser) {
         userDAO.deleteUser(idUser);
+    }
+    
+    @Override
+    public List<UserMoneda> getAllMonedasByUser(Long id) {
+        return userDAO.getAllMonedasByUser(id);
+    }
+    
+    @Override
+    public UserMoneda getMonedaByUser(int idMoneda, Long idUser) {
+        return userDAO.getMonedaByUser(idMoneda, idUser);
     }
 
 }

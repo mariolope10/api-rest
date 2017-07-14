@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.svlada.service.IMonedaService;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/moneda")
@@ -36,22 +39,33 @@ public class MonedaController {
     }
     
     @GetMapping("conmemorativa/ano/{ano}")
-    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPais(@PathVariable("ano") Integer ano) {
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("ano") Integer ano) {
         List<Moneda> list = monedaService.getAllMonedasConmemorativasByAno(ano);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
-    @GetMapping("conmemorativa/pais/{pais}")
-    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("pais") String pais) {
+    /*@GetMapping("conmemorativa/pais/{pais}")
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPais(@PathVariable("pais") String pais) {
         List<Moneda> list = monedaService.getAllMonedasConmemorativasByPais(pais);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    /*@GetMapping("conmemorativa/buscar")
-    public ResponseEntity<List<Moneda>> findMonedas(@RequestParam("texto") String texto) {
-        List<Moneda> list = monedaService.getAllMonedasByPais(pais);
-        return new ResponseEntity<>(list, HttpStatus.OK);
     }*/
+
+    @GetMapping("conmemorativa/pais/{pais}")
+    public ResponseEntity<List<Object>> getAllMonedasConmemorativasByPais_IsInCollection(@PathVariable("pais") String pais) {
+        List<Object[]> listadoAux = monedaService.getAllMonedasConmemorativasByPais_IsInCollection(pais);
+        
+        List<Object> listadoFinal = new ArrayList<>();
+
+        listadoAux.forEach((res) -> {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("moneda", res[0]);
+            map.put("enColeccion", res[1]);
+
+            listadoFinal.add(map);
+        });
+        
+        return new ResponseEntity<>(listadoFinal, HttpStatus.OK);
+    }
 
     @PostMapping("conmemorativa")
     @PreAuthorize("hasRole('ADMIN')")
