@@ -53,5 +53,15 @@ public class UserService implements IUserService {
     public UserMoneda getMonedaByUser(int idMoneda, Long idUser) {
         return userDAO.getMonedaByUser(idMoneda, idUser);
     }
+    
+    @Override
+    public boolean addUserMoneda(UserMoneda userMoneda) {
+        userDAO.addUserMoneda(userMoneda);
+    	return true;
+    }
 
+    @Override
+    public void updateUserMoneda(UserMoneda userMoneda) {
+        userDAO.updateUserMoneda(userMoneda);
+    }
 }

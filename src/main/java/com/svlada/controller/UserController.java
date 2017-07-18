@@ -1,7 +1,6 @@
 package com.svlada.controller;
 
 import com.svlada.config.APISettings;
-import com.svlada.entity.Moneda;
 import com.svlada.entity.User;
 import com.svlada.entity.UserMoneda;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.svlada.security.auth.JwtAuthenticationToken;
 import com.svlada.security.model.UserContext;
-import com.svlada.service.IMonedaService;
 import com.svlada.service.IUserService;
 import java.io.File;
 import java.io.FileFilter;
@@ -27,6 +25,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * End-point for retrieving logged-in user details.
@@ -87,6 +89,24 @@ public class UserController {
         User user = userService.getUserByUsername(userContext.getUsername());
         
         UserMoneda userMoneda = userService.getMonedaByUser(idMoneda, user.getId());
+        
+        return new ResponseEntity<>(userMoneda, HttpStatus.OK);
+    }
+    
+    @PostMapping("monedas")
+    public ResponseEntity<Void> addMoneda(@RequestBody UserMoneda userMoneda, UriComponentsBuilder builder) {
+        boolean flag = userService.addUserMoneda(userMoneda);
+        if (flag == false) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        //HttpHeaders headers = new HttpHeaders();
+        //headers.setLocation(builder.path("/conmemorativa/{id}").buildAndExpand(moneda.getId()).toUri());
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+    
+    @PutMapping("monedas")
+    public ResponseEntity<UserMoneda> updateMoneda(@RequestBody UserMoneda userMoneda) {
+        userService.updateUserMoneda(userMoneda);
         return new ResponseEntity<>(userMoneda, HttpStatus.OK);
     }
 }

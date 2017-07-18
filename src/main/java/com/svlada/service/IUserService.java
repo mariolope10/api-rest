@@ -25,4 +25,8 @@ public interface IUserService {
     List<UserMoneda> getAllMonedasByUser(Long id);
     
     UserMoneda getMonedaByUser(int idMoneda, Long idUser);
+    
+    boolean addUserMoneda(UserMoneda userMoneda);
+    
+    void updateUserMoneda(UserMoneda userMoneda);
 }

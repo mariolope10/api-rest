@@ -54,11 +54,6 @@ public class Moneda implements Serializable {
     //@Transient
     private Pais pais;
     
-    /*@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "serie_id")
-    @JsonBackReference
-    private SerieAno serie_ano;*/
-    
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ceca_id")
     private Ceca ceca;
@@ -157,14 +152,6 @@ public class Moneda implements Serializable {
         this.pais = pais;
     }
 
-    /*public SerieAno getSerie_ano() {
-        return serie_ano;
-    }
-
-    public void setSerie_ano(SerieAno serie_ano) {
-        this.serie_ano = serie_ano;
-    }*/
-
     public Ceca getCeca() {
         return ceca;
     }
@@ -219,6 +206,11 @@ public class Moneda implements Serializable {
 
     public void setTirada_proof(Integer tirada_proof) {
         this.tirada_proof = tirada_proof;
+    }
+
+    @Override
+    public String toString() {
+        return "Moneda{" + "id=" + id + ", ano=" + ano + ", fecha_emision=" + fecha_emision + ", km=" + km + ", motivo=" + motivo + ", autor=" + autor + ", imagen=" + imagen + ", comentario=" + comentario + ", pais=" + pais + ", ceca=" + ceca + ", valor=" + valor + ", tematica=" + tematica + ", tipo=" + tipo + ", tirada_unc=" + tirada_unc + ", tirada_bu=" + tirada_bu + ", tirada_proof=" + tirada_proof + '}';
     }
     
 }

@@ -52,6 +52,18 @@ public class MonedaDAO implements IMonedaDAO {
     }
     
     @Override
+    public List<Object[]> getAllMonedasConmemorativasByAno_IsInCollection(int ano) {
+        String hql = "SELECT m, CASE WHEN (um IS NULL) THEN false ELSE true END "
+                + "FROM UserMoneda um "
+                + "RIGHT OUTER JOIN um.moneda m "
+                + "WHERE m.ano = ? AND m.tipo.id = 2";
+        
+        return (List<Object[]>) entityManager.createQuery(hql)
+                .setParameter(1, ano)
+                .getResultList();
+    }
+    
+    @Override
     public List<Moneda> getAllMonedasConmemorativasByAno(int ano) {
         String hql = "FROM Moneda WHERE tipo.id = 2 AND ano = ? ORDER BY id";
         return (List<Moneda>) entityManager.createQuery(hql)

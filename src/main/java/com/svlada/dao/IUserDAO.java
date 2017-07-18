@@ -22,7 +22,13 @@ public interface IUserDAO {
     
     //////////////////////////////
     
+    UserMoneda getUserMonedaById(int idUserMoneda);
+    
     List<UserMoneda> getAllMonedasByUser(Long id);
     
     UserMoneda getMonedaByUser(int idMoneda, Long idUser);
+    
+    void addUserMoneda(UserMoneda userMoneda);
+    
+    void updateUserMoneda(UserMoneda userMoneda);
 }

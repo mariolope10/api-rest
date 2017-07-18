@@ -38,10 +38,27 @@ public class MonedaController {
         return new ResponseEntity<>(moneda, HttpStatus.OK);
     }
     
-    @GetMapping("conmemorativa/ano/{ano}")
+    /*@GetMapping("conmemorativa/ano/{ano}")
     public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("ano") Integer ano) {
         List<Moneda> list = monedaService.getAllMonedasConmemorativasByAno(ano);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }*/
+    
+    @GetMapping("conmemorativa/ano/{ano}")
+    public ResponseEntity<List<Object>> getAllMonedasConmemorativasByAno_IsInCollection(@PathVariable("ano") Integer ano) {
+        List<Object[]> listadoAux = monedaService.getAllMonedasConmemorativasByAno_IsInCollection(ano);
+        
+        List<Object> listadoFinal = new ArrayList<>();
+
+        listadoAux.forEach((res) -> {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("moneda", res[0]);
+            map.put("enColeccion", res[1]);
+
+            listadoFinal.add(map);
+        });
+        
+        return new ResponseEntity<>(listadoFinal, HttpStatus.OK);
     }
     
     /*@GetMapping("conmemorativa/pais/{pais}")
