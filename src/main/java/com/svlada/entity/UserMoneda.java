@@ -18,6 +18,14 @@ public class UserMoneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public UserMoneda() {
+    }
+
+    public UserMoneda(Long user_fk, Long moneda_fk) {
+        this.user_fk = user_fk;
+        this.moneda_fk = moneda_fk;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

@@ -31,4 +31,6 @@ public interface IUserDAO {
     void addUserMoneda(UserMoneda userMoneda);
     
     void updateUserMoneda(UserMoneda userMoneda);
+    
+    void deleteUserMoneda(int idUserMoneda);
 }

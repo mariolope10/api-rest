@@ -94,14 +94,14 @@ public class UserController {
     }
     
     @PostMapping("monedas")
-    public ResponseEntity<Void> addMoneda(@RequestBody UserMoneda userMoneda, UriComponentsBuilder builder) {
+    public ResponseEntity<UserMoneda> addMoneda(@RequestBody UserMoneda userMoneda, UriComponentsBuilder builder) {
         boolean flag = userService.addUserMoneda(userMoneda);
         if (flag == false) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         //HttpHeaders headers = new HttpHeaders();
         //headers.setLocation(builder.path("/conmemorativa/{id}").buildAndExpand(moneda.getId()).toUri());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userMoneda, HttpStatus.CREATED);
     }
     
     @PutMapping("monedas")
