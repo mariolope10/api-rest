@@ -19,6 +19,24 @@ public class MonedaDAO implements IMonedaDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
+    
+    @Override
+    public void addMoneda(Moneda moneda) {
+        entityManager.persist(moneda);
+    }
+
+    @Override
+    public void updateMoneda(Moneda moneda) {
+        Moneda moncl = getMonedaById(moneda.getId());
+        moncl.setPais(moneda.getPais());
+        moncl.setMotivo(moneda.getMotivo());
+        entityManager.flush();
+    }
+
+    @Override
+    public void deleteMoneda(int idMoneda) {
+        entityManager.remove(getMonedaById(idMoneda));
+    }
 
     @Override
     public Moneda getMonedaById(int idMoneda) {
@@ -40,30 +58,6 @@ public class MonedaDAO implements IMonedaDAO {
     }
     
     @Override
-    public List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais) {
-        String hql = "SELECT m, CASE WHEN (um IS NULL) THEN false ELSE true END "
-                + "FROM UserMoneda um "
-                + "RIGHT OUTER JOIN um.moneda m "
-                + "WHERE m.pais.codigo = ? AND m.tipo.id = 2";
-        
-        return (List<Object[]>) entityManager.createQuery(hql)
-                .setParameter(1, pais)
-                .getResultList();
-    }
-    
-    @Override
-    public List<Object[]> getAllMonedasConmemorativasByAno_IsInCollection(int ano) {
-        String hql = "SELECT m, CASE WHEN (um IS NULL) THEN false ELSE true END "
-                + "FROM UserMoneda um "
-                + "RIGHT OUTER JOIN um.moneda m "
-                + "WHERE m.ano = ? AND m.tipo.id = 2";
-        
-        return (List<Object[]>) entityManager.createQuery(hql)
-                .setParameter(1, ano)
-                .getResultList();
-    }
-    
-    @Override
     public List<Moneda> getAllMonedasConmemorativasByAno(int ano) {
         String hql = "FROM Moneda WHERE tipo.id = 2 AND ano = ? ORDER BY id";
         return (List<Moneda>) entityManager.createQuery(hql)
@@ -71,21 +65,33 @@ public class MonedaDAO implements IMonedaDAO {
                 .getResultList();
     }
     
+    // OPERACIONES DEL USUARIO
+    
     @Override
-    public void addMoneda(Moneda moneda) {
-        entityManager.persist(moneda);
+    public List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser) {
+        String hql = "SELECT m FROM Moneda m "
+                + "LEFT JOIN m.user_monedas um "
+                + "WHERE m.pais.codigo = ? "
+                + "AND m.tipo.id = 2 "
+                + "AND (um.user.id = ? OR um = null)";
+        
+        return (List<Moneda>) entityManager.createQuery(hql)
+                .setParameter(1, pais)
+                .setParameter(2, idUser)
+                .getResultList();
     }
-
+    
     @Override
-    public void updateMoneda(Moneda moneda) {
-        Moneda moncl = getMonedaById(moneda.getId());
-        moncl.setPais(moneda.getPais());
-        moncl.setMotivo(moneda.getMotivo());
-        entityManager.flush();
-    }
-
-    @Override
-    public void deleteMoneda(int idMoneda) {
-        entityManager.remove(getMonedaById(idMoneda));
+    public List<Moneda> getAllMonedasConmemorativasByAnoUser(int ano, long idUser) {
+        String hql = "SELECT m FROM Moneda m "
+                + "LEFT JOIN m.user_monedas um "
+                + "WHERE m.ano = ? "
+                + "AND m.tipo.id = 2 "
+                + "AND (um.user.id = ? OR um = null)";
+        
+        return (List<Moneda>) entityManager.createQuery(hql)
+                .setParameter(1, ano)
+                .setParameter(2, idUser)
+                .getResultList();
     }
 }

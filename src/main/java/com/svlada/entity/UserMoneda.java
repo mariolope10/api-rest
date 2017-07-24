@@ -1,10 +1,12 @@
 package com.svlada.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,8 +24,8 @@ public class UserMoneda implements Serializable {
     }
 
     public UserMoneda(Long user_fk, Long moneda_fk) {
-        this.user_fk = user_fk;
-        this.moneda_fk = moneda_fk;
+        /*this.user_fk = user_fk;
+        this.moneda_fk = moneda_fk;*/
     }
 
     @Id
@@ -31,21 +33,17 @@ public class UserMoneda implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
-    @Column(name = "user_id")
-    private Long user_fk;
-
-    @JoinColumn(name = "moneda_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Moneda.class, fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "moneda_id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityReference(alwaysAsId = true)
     private Moneda moneda;
-
-    @Column(name = "moneda_id")
-    private Long moneda_fk;
 
     @Column(name = "circ_coleccion")
     private Integer circ_coleccion = 0;
@@ -87,28 +85,12 @@ public class UserMoneda implements Serializable {
         this.user = user;
     }
 
-    public Long getUser_fk() {
-        return user_fk;
-    }
-
-    public void setUser_fk(Long user_fk) {
-        this.user_fk = user_fk;
-    }
-
     public Moneda getMoneda() {
         return moneda;
     }
 
     public void setMoneda(Moneda moneda) {
         this.moneda = moneda;
-    }
-
-    public Long getMoneda_fk() {
-        return moneda_fk;
-    }
-
-    public void setMoneda_fk(Long moneda_fk) {
-        this.moneda_fk = moneda_fk;
     }
 
     public Integer getCirc_coleccion() {
@@ -174,10 +156,4 @@ public class UserMoneda implements Serializable {
     public void setProof_intercambio(Integer proof_intercambio) {
         this.proof_intercambio = proof_intercambio;
     }
-
-    @Override
-    public String toString() {
-        return "UserMoneda{" + "id=" + id + ", user_fk=" + user_fk + ", moneda_fk=" + moneda_fk + ", circ_coleccion=" + circ_coleccion + ", circ_intercambio=" + circ_intercambio + ", sc_coleccion=" + sc_coleccion + ", sc_intercambio=" + sc_intercambio + ", bu_coleccion=" + bu_coleccion + ", bu_intercambio=" + bu_intercambio + ", proof_coleccion=" + proof_coleccion + ", proof_intercambio=" + proof_intercambio + '}';
-    }
-
 }

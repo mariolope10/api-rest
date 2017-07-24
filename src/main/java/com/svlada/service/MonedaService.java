@@ -16,6 +16,22 @@ public class MonedaService implements IMonedaService {
 
     @Autowired
     private IMonedaDAO monedaDAO;
+    
+    @Override
+    public boolean addMoneda(Moneda moneda) {
+        monedaDAO.addMoneda(moneda);
+    	return true;
+    }
+
+    @Override
+    public void updateMoneda(Moneda moneda) {
+        monedaDAO.updateMoneda(moneda);
+    }
+
+    @Override
+    public void deleteMoneda(int idMoneda) {
+        monedaDAO.deleteMoneda(idMoneda);
+    }
 
     @Override
     public Moneda getMonedaById(int idMoneda) {
@@ -37,30 +53,16 @@ public class MonedaService implements IMonedaService {
         return monedaDAO.getAllMonedasConmemorativasByAno(ano);
     }
     
+    //////////////////////////////////////////
+    
     @Override
-    public List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais) {
-        return monedaDAO.getAllMonedasConmemorativasByPais_IsInCollection(pais);
+    public List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser) {
+        return monedaDAO.getAllMonedasConmemorativasByPaisUser(pais, idUser);
     }
     
     @Override
-    public List<Object[]> getAllMonedasConmemorativasByAno_IsInCollection(int ano) {
-        return monedaDAO.getAllMonedasConmemorativasByAno_IsInCollection(ano);
-    }
-
-    @Override
-    public boolean addMoneda(Moneda moneda) {
-        monedaDAO.addMoneda(moneda);
-    	return true;
-    }
-
-    @Override
-    public void updateMoneda(Moneda moneda) {
-        monedaDAO.updateMoneda(moneda);
-    }
-
-    @Override
-    public void deleteMoneda(int idMoneda) {
-        monedaDAO.deleteMoneda(idMoneda);
+    public List<Moneda> getAllMonedasConmemorativasByAnoUser(int ano, long idUser) {
+        return monedaDAO.getAllMonedasConmemorativasByAnoUser(ano, idUser);
     }
 
 }

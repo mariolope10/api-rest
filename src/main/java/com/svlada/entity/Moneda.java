@@ -3,6 +3,8 @@ package com.svlada.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -66,6 +69,14 @@ public class Moneda implements Serializable {
     @JoinColumn(name = "tematica_id")
     @JsonBackReference
     private Tematica tematica;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "serie_ano_id")
+    @JsonBackReference
+    private SerieAno serie_ano;
+    
+    @OneToMany(mappedBy = "moneda")
+    private Set<UserMoneda> user_monedas = new HashSet<UserMoneda>();
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_id")
@@ -174,6 +185,22 @@ public class Moneda implements Serializable {
 
     public void setTematica(Tematica tematica) {
         this.tematica = tematica;
+    }
+
+    public SerieAno getSerie_ano() {
+        return serie_ano;
+    }
+
+    public void setSerie_ano(SerieAno serie_ano) {
+        this.serie_ano = serie_ano;
+    }
+
+    public Set<UserMoneda> getUser_monedas() {
+        return user_monedas;
+    }
+
+    public void setUser_monedas(Set<UserMoneda> user_monedas) {
+        this.user_monedas = user_monedas;
     }
 
     public Tipo getTipo() {

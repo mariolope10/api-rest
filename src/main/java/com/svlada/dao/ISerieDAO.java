@@ -9,15 +9,21 @@ import java.util.List;
  */
 public interface ISerieDAO {
 
-    List<Serie> getAllSeries();
-    
-    List<Serie> getAllSeriesByPais(String pais);
-
-    Serie getSerieById(int idSerie);
-
     void addSerie(Serie serie);
 
     void updateSerie(Serie serie);
 
     void deleteSerie(int idSerie);
+    
+    Serie getSerieById(int idSerie);
+
+    List<Serie> getAllSeries();
+    
+    List<Serie> getAllSeriesByPais(String pais);
+    
+    ///////////////////////////////////////////////////////////
+
+    List<Serie> getAllSeriesByPaisUser(String pais, long idUser);
+    
+    List<Serie> getAllSeriesByAnoUser(int ano, long idUser);
 }

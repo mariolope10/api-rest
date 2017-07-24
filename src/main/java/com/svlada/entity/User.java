@@ -7,7 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by fan.jin on 2016-10-15.
@@ -39,6 +41,9 @@ public class User implements UserDetails, Serializable {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
     private List<Authority> authorities;
+    
+    @OneToMany(mappedBy = "user")
+    private Set<UserMoneda> user_monedas = new HashSet<UserMoneda>();
 
     public Long getId() {
         return id;
@@ -80,6 +85,14 @@ public class User implements UserDetails, Serializable {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
+    }
+
+    public Set<UserMoneda> getUser_monedas() {
+        return user_monedas;
+    }
+
+    public void setUser_monedas(Set<UserMoneda> user_monedas) {
+        this.user_monedas = user_monedas;
     }
 
     // We can add the below fields in the users table.

@@ -5,6 +5,8 @@ package com.svlada.controller;
  * @author mario.lope
  */
 import com.svlada.entity.Moneda;
+import com.svlada.entity.User;
+import com.svlada.security.model.UserContext;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -21,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.svlada.service.IMonedaService;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import com.svlada.service.IUserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
 @RequestMapping("api/moneda")
@@ -31,59 +32,10 @@ public class MonedaController {
 
     @Autowired
     private IMonedaService monedaService;
-
-    @GetMapping("conmemorativa/{id}")
-    public ResponseEntity<Moneda> getMonedaById(@PathVariable("id") Integer id) {
-        Moneda moneda = monedaService.getMonedaById(id);
-        return new ResponseEntity<>(moneda, HttpStatus.OK);
-    }
     
-    /*@GetMapping("conmemorativa/ano/{ano}")
-    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("ano") Integer ano) {
-        List<Moneda> list = monedaService.getAllMonedasConmemorativasByAno(ano);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
+    @Autowired
+    private IUserService userService;
     
-    @GetMapping("conmemorativa/ano/{ano}")
-    public ResponseEntity<List<Object>> getAllMonedasConmemorativasByAno_IsInCollection(@PathVariable("ano") Integer ano) {
-        List<Object[]> listadoAux = monedaService.getAllMonedasConmemorativasByAno_IsInCollection(ano);
-        
-        List<Object> listadoFinal = new ArrayList<>();
-
-        listadoAux.forEach((res) -> {
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("moneda", res[0]);
-            map.put("enColeccion", res[1]);
-
-            listadoFinal.add(map);
-        });
-        
-        return new ResponseEntity<>(listadoFinal, HttpStatus.OK);
-    }
-    
-    /*@GetMapping("conmemorativa/pais/{pais}")
-    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPais(@PathVariable("pais") String pais) {
-        List<Moneda> list = monedaService.getAllMonedasConmemorativasByPais(pais);
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
-
-    @GetMapping("conmemorativa/pais/{pais}")
-    public ResponseEntity<List<Object>> getAllMonedasConmemorativasByPais_IsInCollection(@PathVariable("pais") String pais) {
-        List<Object[]> listadoAux = monedaService.getAllMonedasConmemorativasByPais_IsInCollection(pais);
-        
-        List<Object> listadoFinal = new ArrayList<>();
-
-        listadoAux.forEach((res) -> {
-            Map<String, Object> map = new LinkedHashMap<>();
-            map.put("moneda", res[0]);
-            map.put("enColeccion", res[1]);
-
-            listadoFinal.add(map);
-        });
-        
-        return new ResponseEntity<>(listadoFinal, HttpStatus.OK);
-    }
-
     @PostMapping("conmemorativa")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> addMoneda(@RequestBody Moneda moneda, UriComponentsBuilder builder) {
@@ -108,5 +60,47 @@ public class MonedaController {
     public ResponseEntity<Void> deleteMoneda(@PathVariable("id") Integer id) {
         monedaService.deleteMoneda(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("conmemorativa/{id}")
+    public ResponseEntity<Moneda> getMonedaById(@PathVariable("id") Integer id) {
+        Moneda moneda = monedaService.getMonedaById(id);
+        return new ResponseEntity<>(moneda, HttpStatus.OK);
+    }
+    
+    /*@GetMapping("conmemorativa/ano/{ano}")
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("ano") Integer ano) {
+        List<Moneda> list = monedaService.getAllMonedasConmemorativasByAno(ano);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }*/
+    
+    /*@GetMapping("conmemorativa/pais/{pais}")
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPais(@PathVariable("pais") String pais) {
+        List<Moneda> list = monedaService.getAllMonedasConmemorativasByPais(pais);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }*/
+    
+    //////////////////////////////////////////////////////
+    
+    @GetMapping("conmemorativa/ano/{ano}")
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAnoUser(@PathVariable("ano") Integer ano) {
+        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        User user = userService.getUserByUsername(userContext.getUsername());
+        
+        List<Moneda> listadoMonedas = monedaService.getAllMonedasConmemorativasByAnoUser(ano, user.getId());
+        
+        return new ResponseEntity<>(listadoMonedas, HttpStatus.OK);
+    }
+
+    @GetMapping("conmemorativa/pais/{pais}")
+    public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPaisUser(@PathVariable("pais") String pais) {
+        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        User user = userService.getUserByUsername(userContext.getUsername());
+                
+        List<Moneda> listadoMonedas = monedaService.getAllMonedasConmemorativasByPaisUser(pais, user.getId());
+        
+        return new ResponseEntity<>(listadoMonedas, HttpStatus.OK);
     }
 }

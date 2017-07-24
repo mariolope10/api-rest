@@ -8,6 +8,12 @@ import java.util.List;
  * @author mario.lope
  */
 public interface IMonedaService {
+    
+    boolean addMoneda(Moneda moneda);
+
+    void updateMoneda(Moneda moneda);
+
+    void deleteMoneda(int idMoneda);
 
     Moneda getMonedaById(int idMoneda);
     
@@ -17,13 +23,9 @@ public interface IMonedaService {
     
     List<Moneda> getAllMonedasConmemorativasByAno(int ano);
     
-    List<Object[]> getAllMonedasConmemorativasByPais_IsInCollection(String pais);
+    //////////////////////////////////////
     
-    List<Object[]> getAllMonedasConmemorativasByAno_IsInCollection(int ano);
-
-    boolean addMoneda(Moneda moneda);
-
-    void updateMoneda(Moneda moneda);
-
-    void deleteMoneda(int idMoneda);
+    List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser);
+    
+    List<Moneda> getAllMonedasConmemorativasByAnoUser(int ano, long idUser);
 }
