@@ -16,7 +16,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name="USER")
+@Table(name="user")
 public class User implements UserDetails, Serializable {
     @Id
     @Column(name = "id")
@@ -119,5 +119,10 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", username=" + username + ", password=" + password + ", firstname=" + firstname + ", lastname=" + lastname + ", authorities=" + authorities + '}';
     }
 }

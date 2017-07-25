@@ -59,13 +59,12 @@ public class SerieDAO implements ISerieDAO {
     
     @Override
     public List<Serie> getAllSeriesByPaisUser(String codigo, long idUser) {
-        String hql = "SELECT s FROM Moneda m "
-                + "JOIN m.serie_ano sa "
-                + "JOIN sa.serie s "
-                + "LEFT JOIN m.user_monedas um "
-                + "WHERE s.pais.codigo = ? "
-                + "AND m.tipo.id = 1 "
-                + "AND (um.user.id = ? OR um = null)";
+        String hql = "SELECT moneda.serie_ano.serie FROM Moneda moneda "
+                + "LEFT JOIN moneda.user_monedas um "
+                + "WHERE moneda.serie_ano.serie.pais.codigo = ? "
+                + "AND moneda.tipo.id = 1 "
+                + "AND (um.user.id = ? OR um = null) "
+                + "GROUP BY moneda.serie_ano.serie";
         
         return (List<Serie>) entityManager.createQuery(hql)
                 .setParameter(1, codigo)
@@ -75,17 +74,16 @@ public class SerieDAO implements ISerieDAO {
     
     @Override
     public List<Serie> getAllSeriesByAnoUser(int ano, long idUser) {
-        String hql = "SELECT s FROM Moneda m "
-                + "JOIN m.serie_ano sa "
-                + "JOIN sa.serie s "
-                + "LEFT JOIN m.user_monedas um "
-                + "WHERE sa.ano = ? "
-                + "AND m.tipo.id = 1 "
-                + "AND (um.user.id = ? OR um = null)";
+        String hql = "SELECT moneda.serie_ano.serie FROM Moneda moneda "
+                + "LEFT JOIN moneda.user_monedas um "
+                + "WHERE :ano BETWEEN moneda.serie_ano.serie.fecha_desde AND moneda.serie_ano.serie.fecha_hasta "
+                + "AND moneda.tipo.id = 1 "
+                + "AND (um.user.id = :id_user OR um = null) "
+                + "GROUP BY moneda.serie_ano.serie";
         
         return (List<Serie>) entityManager.createQuery(hql)
-                .setParameter(1, ano)
-                .setParameter(2, idUser)
+                .setParameter("ano", ano)
+                .setParameter("id_user", idUser)
                 .getResultList();
     }
 }

@@ -89,7 +89,7 @@ public class SerieController {
     }
     
     @GetMapping("series/ano/{ano}")
-    public ResponseEntity<List<Serie>> getAllSeriesByPaisUser(@PathVariable("ano") Integer ano) {
+    public ResponseEntity<List<Serie>> getAllSeriesByAnoUser(@PathVariable("ano") Integer ano) {
         UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
         User user = userService.getUserByUsername(userContext.getUsername());

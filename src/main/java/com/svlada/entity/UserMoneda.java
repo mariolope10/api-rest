@@ -20,12 +20,11 @@ public class UserMoneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public UserMoneda() {
-    }
+    public UserMoneda() {}
 
-    public UserMoneda(Long user_fk, Long moneda_fk) {
-        /*this.user_fk = user_fk;
-        this.moneda_fk = moneda_fk;*/
+    public UserMoneda(User user, Moneda moneda) {
+        this.user = user;
+        this.moneda = moneda;
     }
 
     @Id
@@ -35,13 +34,21 @@ public class UserMoneda implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = EntityIdResolver.class,
+        scope=User.class)
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "moneda_id")
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = EntityIdResolver.class,
+        scope=Moneda.class)
     @JsonIdentityReference(alwaysAsId = true)
     private Moneda moneda;
 
@@ -155,5 +162,10 @@ public class UserMoneda implements Serializable {
 
     public void setProof_intercambio(Integer proof_intercambio) {
         this.proof_intercambio = proof_intercambio;
+    }
+
+    @Override
+    public String toString() {
+        return "UserMoneda{" + "id=" + id + ", user=" + user + ", moneda=" + moneda + ", circ_coleccion=" + circ_coleccion + ", circ_intercambio=" + circ_intercambio + ", sc_coleccion=" + sc_coleccion + ", sc_intercambio=" + sc_intercambio + ", bu_coleccion=" + bu_coleccion + ", bu_intercambio=" + bu_intercambio + ", proof_coleccion=" + proof_coleccion + ", proof_intercambio=" + proof_intercambio + '}';
     }
 }

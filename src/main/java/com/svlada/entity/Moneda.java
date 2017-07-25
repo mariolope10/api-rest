@@ -1,6 +1,8 @@
 package com.svlada.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,6 +22,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "moneda")
+
 public class Moneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,8 +56,6 @@ public class Moneda implements Serializable {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pais_id")
-    //@JsonInclude(JsonInclude.Include.NON_NULL)
-    //@Transient
     private Pais pais;
     
     @ManyToOne(fetch = FetchType.EAGER)
@@ -67,12 +68,11 @@ public class Moneda implements Serializable {
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tematica_id")
-    @JsonBackReference
     private Tematica tematica;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_ano_id")
-    @JsonBackReference
+    @JsonIgnore
     private SerieAno serie_ano;
     
     @OneToMany(mappedBy = "moneda")
