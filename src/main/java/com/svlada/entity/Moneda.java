@@ -22,7 +22,11 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "moneda")
-
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id",
+        resolver = EntityIdResolver.class,
+        scope = Moneda.class)
 public class Moneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -31,63 +35,63 @@ public class Moneda implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private int id;
-    
+
     @Column(name = "ano")
     private Integer ano;
-    
+
     @Column(name = "fecha_emision")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_emision;
-    
+
     @Column(name = "km")
     private String km;
-    
+
     @Column(name = "motivo")
     private String motivo;
-    
+
     @Column(name = "autor")
     private String autor;
-    
+
     @Column(name = "imagen")
     private String imagen;
-    
+
     @Column(name = "comentario")
     private String comentario;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pais_id")
     private Pais pais;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ceca_id")
     private Ceca ceca;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "valor_id")
     private Valor valor;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tematica_id")
     private Tematica tematica;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "serie_ano_id")
     @JsonIgnore
     private SerieAno serie_ano;
-    
+
     @OneToMany(mappedBy = "moneda")
     private Set<UserMoneda> user_monedas = new HashSet<UserMoneda>();
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_id")
     private Tipo tipo;
-    
+
     @Column(name = "tirada_unc")
     private Integer tirada_unc;
-    
+
     @Column(name = "tirada_bu")
     private Integer tirada_bu;
-    
+
     @Column(name = "tirada_proof")
     private Integer tirada_proof;
 
@@ -239,5 +243,5 @@ public class Moneda implements Serializable {
     public String toString() {
         return "Moneda{" + "id=" + id + ", ano=" + ano + ", fecha_emision=" + fecha_emision + ", km=" + km + ", motivo=" + motivo + ", autor=" + autor + ", imagen=" + imagen + ", comentario=" + comentario + ", pais=" + pais + ", ceca=" + ceca + ", valor=" + valor + ", tematica=" + tematica + ", tipo=" + tipo + ", tirada_unc=" + tirada_unc + ", tirada_bu=" + tirada_bu + ", tirada_proof=" + tirada_proof + '}';
     }
-    
+
 }

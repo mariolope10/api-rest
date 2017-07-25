@@ -20,7 +20,8 @@ public class UserMoneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public UserMoneda() {}
+    public UserMoneda() {
+    }
 
     public UserMoneda(User user, Moneda moneda) {
         this.user = user;
@@ -35,20 +36,15 @@ public class UserMoneda implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id",
-        resolver = EntityIdResolver.class,
-        scope=User.class)
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id",
+            resolver = EntityIdResolver.class,
+            scope = User.class)
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "moneda_id")
-    @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id",
-        resolver = EntityIdResolver.class,
-        scope=Moneda.class)
     @JsonIdentityReference(alwaysAsId = true)
     private Moneda moneda;
 
