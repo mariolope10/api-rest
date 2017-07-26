@@ -13,9 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "user_moneda")
+@Table(name = "user_moneda", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"user_id", "moneda_id"})
+})
 public class UserMoneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -33,8 +36,8 @@ public class UserMoneda implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "user_id", updatable = false)
     @JsonIdentityInfo(
             generator = ObjectIdGenerators.PropertyGenerator.class,
             property = "id",
@@ -43,8 +46,8 @@ public class UserMoneda implements Serializable {
     @JsonIdentityReference(alwaysAsId = true)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "moneda_id")
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "moneda_id", updatable = false)
     @JsonIdentityReference(alwaysAsId = true)
     private Moneda moneda;
 
