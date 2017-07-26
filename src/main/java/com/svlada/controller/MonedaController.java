@@ -1,9 +1,5 @@
 package com.svlada.controller;
 
-/**
- *
- * @author mario.lope
- */
 import com.svlada.entity.Moneda;
 import com.svlada.entity.User;
 import com.svlada.security.model.UserContext;
@@ -26,8 +22,12 @@ import com.svlada.service.IMonedaService;
 import com.svlada.service.IUserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ *
+ * @author mario.lope
+ */
 @RestController
-@RequestMapping("api/moneda")
+@RequestMapping("api")
 public class MonedaController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class MonedaController {
     @Autowired
     private IUserService userService;
     
-    @PostMapping("conmemorativa")
+    @PostMapping("moneda")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> addMoneda(@RequestBody Moneda moneda, UriComponentsBuilder builder) {
         boolean flag = monedaService.addMoneda(moneda);
@@ -48,41 +48,41 @@ public class MonedaController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @PutMapping("conmemorativa")
+    @PutMapping("moneda")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Moneda> updateMoneda(@RequestBody Moneda moneda) {
         monedaService.updateMoneda(moneda);
         return new ResponseEntity<>(moneda, HttpStatus.OK);
     }
 
-    @DeleteMapping("conmemorativa/{id}")
+    @DeleteMapping("moneda/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteMoneda(@PathVariable("id") Integer id) {
         monedaService.deleteMoneda(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("conmemorativa/{id}")
+    @GetMapping("moneda/{id}")
     public ResponseEntity<Moneda> getMonedaById(@PathVariable("id") Integer id) {
         Moneda moneda = monedaService.getMonedaById(id);
         return new ResponseEntity<>(moneda, HttpStatus.OK);
     }
     
-    /*@GetMapping("conmemorativa/ano/{ano}")
+    @GetMapping("monedas/conmemorativa/ano/{ano}")
     public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAno(@PathVariable("ano") Integer ano) {
         List<Moneda> list = monedaService.getAllMonedasConmemorativasByAno(ano);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
+    }
     
-    /*@GetMapping("conmemorativa/pais/{pais}")
+    @GetMapping("monedas/conmemorativa/pais/{pais}")
     public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPais(@PathVariable("pais") String pais) {
         List<Moneda> list = monedaService.getAllMonedasConmemorativasByPais(pais);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
+    }
     
-    //////////////////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
     
-    @GetMapping("conmemorativa/ano/{ano}")
+    @GetMapping("user/monedas/conmemorativa/ano/{ano}")
     public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByAnoUser(@PathVariable("ano") Integer ano) {
         UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
@@ -93,7 +93,7 @@ public class MonedaController {
         return new ResponseEntity<>(listadoMonedas, HttpStatus.OK);
     }
 
-    @GetMapping("conmemorativa/pais/{pais}")
+    @GetMapping("user/monedas/conmemorativa/pais/{pais}")
     public ResponseEntity<List<Moneda>> getAllMonedasConmemorativasByPaisUser(@PathVariable("pais") String pais) {
         UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         

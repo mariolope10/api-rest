@@ -9,13 +9,13 @@ import java.util.List;
  */
 public interface IPaisService {
 
-    List<Pais> getAllPaises();
-    
-    Pais getPaisByCodigo(String codigo);
-
     boolean addPais(Pais pais);
 
     void updatePais(Pais pais);
 
     void deletePais(String codigo);
+    
+    List<Pais> getAllPaises();
+    
+    Pais getPaisByCodigo(String codigo);
 }

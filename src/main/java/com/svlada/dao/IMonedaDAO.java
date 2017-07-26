@@ -23,7 +23,7 @@ public interface IMonedaDAO {
     
     List<Moneda> getAllMonedasConmemorativasByAno(int ano);
     
-    /////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
     
     List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser);
     

@@ -10,23 +10,12 @@ import com.svlada.entity.Pais;
  *
  * @author mario.lope
  */
-
 @Service
 public class PaisService implements IPaisService {
 
     @Autowired
     private IPaisDAO paisDAO;
-
-    @Override
-    public List<Pais> getAllPaises() {
-        return paisDAO.getAllPaises();
-    }
-
-    @Override
-    public Pais getPaisByCodigo(String codigo) {
-        return paisDAO.getPaisByCodigo(codigo);
-    }
-
+    
     @Override
     public boolean addPais(Pais pais) {
         paisDAO.addPais(pais);
@@ -43,4 +32,13 @@ public class PaisService implements IPaisService {
         paisDAO.deletePais(codigo);
     }
 
+    @Override
+    public List<Pais> getAllPaises() {
+        return paisDAO.getAllPaises();
+    }
+
+    @Override
+    public Pais getPaisByCodigo(String codigo) {
+        return paisDAO.getPaisByCodigo(codigo);
+    }
 }

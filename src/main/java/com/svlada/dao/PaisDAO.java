@@ -11,25 +11,13 @@ import org.springframework.stereotype.Repository;
  *
  * @author mario.lope
  */
-
 @Transactional
 @Repository
 public class PaisDAO implements IPaisDAO {
 
     @PersistenceContext
     private EntityManager entityManager;
-
-    @Override
-    public List<Pais> getAllPaises() {
-        String hql = "FROM Pais ORDER BY codigo";
-        return (List<Pais>) entityManager.createQuery(hql).getResultList();
-    }
     
-    @Override
-    public Pais getPaisByCodigo(String codigo) {
-        return entityManager.find(Pais.class, codigo);
-    }
-
     @Override
     public void addPais(Pais pais) {
         entityManager.persist(pais);
@@ -46,5 +34,16 @@ public class PaisDAO implements IPaisDAO {
     @Override
     public void deletePais(String codigo) {
         entityManager.remove(getPaisByCodigo(codigo));
+    }
+
+    @Override
+    public List<Pais> getAllPaises() {
+        String hql = "FROM Pais ORDER BY codigo";
+        return (List<Pais>) entityManager.createQuery(hql).getResultList();
+    }
+    
+    @Override
+    public Pais getPaisByCodigo(String codigo) {
+        return entityManager.find(Pais.class, codigo);
     }
 }

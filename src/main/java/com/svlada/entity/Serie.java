@@ -15,6 +15,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ *
+ * @author mario.lope
+ */
 @Entity
 @Table(name = "serie")
 public class Serie implements Serializable {

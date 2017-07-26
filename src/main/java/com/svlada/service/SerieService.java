@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
  *
  * @author mario.lope
  */
-
 @Service
 public class SerieService implements ISerieService {
 
@@ -48,7 +47,7 @@ public class SerieService implements ISerieService {
         return serieDAO.getAllSeriesByPais(pais);
     }
     
-    //////////////////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
     
     @Override
     public List<Serie> getAllSeriesByPaisUser(String pais, long idUser) {
@@ -59,5 +58,4 @@ public class SerieService implements ISerieService {
     public List<Serie> getAllSeriesByAnoUser(int ano, long idUser) {
         return serieDAO.getAllSeriesByAnoUser(ano, idUser);
     }
-
 }

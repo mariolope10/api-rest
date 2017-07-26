@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by fan.jin on 2016-10-15.
+ *
+ * @author mario.lope
  */
-
 @Entity
 @Table(name="user")
 public class User implements UserDetails, Serializable {

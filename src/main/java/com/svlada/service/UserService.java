@@ -9,7 +9,6 @@ import com.svlada.entity.User;
  *
  * @author mario.lope
  */
-
 @Service
 public class UserService implements IUserService {
 

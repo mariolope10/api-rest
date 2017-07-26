@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author mario.lope
  */
-
 @Transactional
 @Repository
 public class SerieDAO implements ISerieDAO {
@@ -55,7 +54,7 @@ public class SerieDAO implements ISerieDAO {
                 .getResultList();
     }
     
-    //////////////////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
     
     @Override
     public List<Serie> getAllSeriesByPaisUser(String codigo, long idUser) {

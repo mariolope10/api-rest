@@ -14,9 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+/**
+ *
+ * @author mario.lope
+ */
 @Entity
-@Table(name = "serie_ano")
+@Table(name = "serie_ano", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"serie_id", "ano"})
+})
 public class SerieAno implements Serializable {
 
     private static final long serialVersionUID = 1L;

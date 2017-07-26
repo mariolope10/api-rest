@@ -23,11 +23,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * End-point for retrieving logged-in user details.
- * 
- * @author vladimir.stankovic
  *
- * Aug 4, 2016
+ * @author mario.lope
  */
 @RestController
 @RequestMapping("api/user")

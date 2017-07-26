@@ -9,7 +9,6 @@ import com.svlada.entity.UserMoneda;
  *
  * @author mario.lope
  */
-
 @Service
 public class UserMonedaService implements IUserMonedaService {
 

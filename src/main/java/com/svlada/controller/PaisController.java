@@ -1,9 +1,5 @@
 package com.svlada.controller;
 
-/**
- *
- * @author mario.lope
- */
 import com.svlada.entity.Pais;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,25 +17,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 import com.svlada.service.IPaisService;
 
+/**
+ *
+ * @author mario.lope
+ */
 @RestController
 @RequestMapping("api")
 public class PaisController {
 
     @Autowired
     private IPaisService paisService;
-
-    @GetMapping("pais/{codigo}")
-    public ResponseEntity<Pais> getPaisById(@PathVariable("codigo") String codigo) {
-        Pais pais = paisService.getPaisByCodigo(codigo);
-        return new ResponseEntity<>(pais, HttpStatus.OK);
-    }
-
-    @GetMapping("paises")
-    public ResponseEntity<List<Pais>> getAllPaises() {
-        List<Pais> list = paisService.getAllPaises();
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
+    
     @PostMapping("pais")
     public ResponseEntity<Void> addMoneda(@RequestBody Pais pais, UriComponentsBuilder builder) {
         boolean flag = paisService.addPais(pais);
@@ -61,5 +49,17 @@ public class PaisController {
     public ResponseEntity<Void> deleteMoneda(@PathVariable("codigo") String codigo) {
         paisService.deletePais(codigo);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("pais/{codigo}")
+    public ResponseEntity<Pais> getPaisById(@PathVariable("codigo") String codigo) {
+        Pais pais = paisService.getPaisByCodigo(codigo);
+        return new ResponseEntity<>(pais, HttpStatus.OK);
+    }
+
+    @GetMapping("paises")
+    public ResponseEntity<List<Pais>> getAllPaises() {
+        List<Pais> list = paisService.getAllPaises();
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

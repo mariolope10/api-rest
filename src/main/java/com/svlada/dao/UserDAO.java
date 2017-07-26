@@ -24,9 +24,9 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public void updateUser(User user) {
-        User uscl = getUserById(user.getId());
-        uscl.setFirstname(user.getFirstname());
-        uscl.setLastname(user.getLastname());
+        User u = getUserById(user.getId());
+        u.setFirstname(user.getFirstname());
+        u.setLastname(user.getLastname());
         entityManager.flush();
     }
 

@@ -10,7 +10,6 @@ import com.svlada.dao.IMonedaDAO;
  *
  * @author mario.lope
  */
-
 @Service
 public class MonedaService implements IMonedaService {
 
@@ -53,7 +52,7 @@ public class MonedaService implements IMonedaService {
         return monedaDAO.getAllMonedasConmemorativasByAno(ano);
     }
     
-    //////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
     
     @Override
     public List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser) {

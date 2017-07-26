@@ -1,7 +1,6 @@
 package com.svlada.dao;
 
 import com.svlada.entity.Moneda;
-import com.svlada.entity.UserMoneda;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  * @author mario.lope
  */
-
 @Transactional
 @Repository
 public class MonedaDAO implements IMonedaDAO {
@@ -65,7 +63,7 @@ public class MonedaDAO implements IMonedaDAO {
                 .getResultList();
     }
     
-    // OPERACIONES DEL USUARIO
+    // USER ////////////////////////////////////////////////////////////////////
     
     @Override
     public List<Moneda> getAllMonedasConmemorativasByPaisUser(String pais, long idUser) {

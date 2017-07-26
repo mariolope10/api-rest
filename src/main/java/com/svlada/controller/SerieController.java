@@ -1,9 +1,5 @@
 package com.svlada.controller;
 
-/**
- *
- * @author mario.lope
- */
 import com.svlada.entity.Serie;
 import com.svlada.entity.User;
 import com.svlada.security.model.UserContext;
@@ -14,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+/**
+ *
+ * @author mario.lope
+ */
 @RestController
 @RequestMapping("api")
 public class SerieController {
@@ -36,6 +37,7 @@ public class SerieController {
     private IUserService userService;
     
     @PostMapping("serie")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> addSerie(@RequestBody Serie serie, UriComponentsBuilder builder) {
         boolean flag = serieService.addSerie(serie);
         if (flag == false) {
@@ -47,12 +49,14 @@ public class SerieController {
     }
 
     @PutMapping("serie")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Serie> updateSerie(@RequestBody Serie serie) {
         serieService.updateSerie(serie);
         return new ResponseEntity<>(serie, HttpStatus.OK);
     }
 
     @DeleteMapping("serie/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteSerie(@PathVariable("id") Integer id) {
         serieService.deleteSerie(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -70,15 +74,15 @@ public class SerieController {
         return new ResponseEntity<>(listado, HttpStatus.OK);
     }
 
-    /*@GetMapping("series/pais/{pais}")
+    @GetMapping("series/pais/{pais}")
     public ResponseEntity<List<Serie>> getAllSeriesByPais(@PathVariable("pais") String pais) {
         List<Serie> list = serieService.getAllSeriesByPais(pais);
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }*/
+    }
     
-    ///////////////////////////////////////////////
+    // USER ////////////////////////////////////////////////////////////////////
 
-    @GetMapping("series/pais/{pais}")
+    @GetMapping("user/series/pais/{pais}")
     public ResponseEntity<List<Serie>> getAllSeriesByPaisUser(@PathVariable("pais") String pais) {
         UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
@@ -88,7 +92,7 @@ public class SerieController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
-    @GetMapping("series/ano/{ano}")
+    @GetMapping("user/series/ano/{ano}")
     public ResponseEntity<List<Serie>> getAllSeriesByAnoUser(@PathVariable("ano") Integer ano) {
         UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         
