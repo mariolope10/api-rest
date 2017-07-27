@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -43,9 +42,7 @@ public class UserController {
     
     @GetMapping("image")
     public ResponseEntity<InputStreamResource> downloadUserAvatarImage() throws IOException {
-        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        User user = userService.getUserByUsername(userContext.getUsername());
+        User user = userService.getUserByUsername();
         
         File profileImageDirectory = new File(apiSettings.getImagesPath() + "profile\\");
 
