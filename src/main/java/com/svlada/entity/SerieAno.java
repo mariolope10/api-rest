@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import org.hibernate.annotations.SortComparator;
 
 /**
  *
@@ -42,6 +43,7 @@ public class SerieAno implements Serializable {
     private Integer ano;
 
     @OneToMany(mappedBy = "serie_ano", cascade = CascadeType.ALL)
+    @SortComparator(MonedaComparatorSortByValor.class)
     private Set<Moneda> monedas;
 
     public int getId() {

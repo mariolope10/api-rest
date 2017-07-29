@@ -19,6 +19,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
 
 @Entity
 @Table(name = "moneda")
@@ -27,6 +30,8 @@ import javax.persistence.TemporalType;
         property = "id",
         resolver = EntityIdResolver.class,
         scope = Moneda.class)
+@FilterDef(name = "filterByUserId",
+        parameters = @ParamDef(name = "id", type = "long"))
 public class Moneda implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -80,6 +85,7 @@ public class Moneda implements Serializable {
     private SerieAno serie_ano;
 
     @OneToMany(mappedBy = "moneda")
+    @Filter(name = "filterByUserId", condition = "user_id = :id")
     private Set<UserMoneda> user_monedas = new HashSet<UserMoneda>();
 
     @ManyToOne(fetch = FetchType.EAGER)

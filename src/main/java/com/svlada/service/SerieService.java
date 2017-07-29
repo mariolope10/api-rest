@@ -2,6 +2,7 @@ package com.svlada.service;
 
 import com.svlada.dao.ISerieDAO;
 import com.svlada.entity.Serie;
+import com.svlada.entity.User;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,12 +51,12 @@ public class SerieService implements ISerieService {
     // USER ////////////////////////////////////////////////////////////////////
     
     @Override
-    public List<Serie> getAllSeriesByPaisUser(String pais, long idUser) {
-        return serieDAO.getAllSeriesByPaisUser(pais, idUser);
+    public List<Serie> getAllSeriesByPaisUser(String pais, User user) {
+        return serieDAO.getAllSeriesByPaisUser(pais, user);
     }
     
     @Override
-    public List<Serie> getAllSeriesByAnoUser(int ano, long idUser) {
-        return serieDAO.getAllSeriesByAnoUser(ano, idUser);
+    public List<Serie> getAllSeriesByAnoUser(int ano, User user) {
+        return serieDAO.getAllSeriesByAnoUser(ano, user);
     }
 }

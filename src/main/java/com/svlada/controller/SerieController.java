@@ -2,7 +2,6 @@ package com.svlada.controller;
 
 import com.svlada.entity.Serie;
 import com.svlada.entity.User;
-import com.svlada.security.model.UserContext;
 import com.svlada.service.ISerieService;
 import com.svlada.service.IUserService;
 import java.util.List;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,21 +82,17 @@ public class SerieController {
 
     @GetMapping("user/series/pais/{pais}")
     public ResponseEntity<List<Serie>> getAllSeriesByPaisUser(@PathVariable("pais") String pais) {
-        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername();
         
-        User user = userService.getUserByUsername(userContext.getUsername());
-        
-        List<Serie> list = serieService.getAllSeriesByPaisUser(pais, user.getId());
+        List<Serie> list = serieService.getAllSeriesByPaisUser(pais, user);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
     @GetMapping("user/series/ano/{ano}")
     public ResponseEntity<List<Serie>> getAllSeriesByAnoUser(@PathVariable("ano") Integer ano) {
-        UserContext userContext = (UserContext) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByUsername();
         
-        User user = userService.getUserByUsername(userContext.getUsername());
-        
-        List<Serie> list = serieService.getAllSeriesByAnoUser(ano, user.getId());
+        List<Serie> list = serieService.getAllSeriesByAnoUser(ano, user);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

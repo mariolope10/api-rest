@@ -1,6 +1,7 @@
 package com.svlada.service;
 
 import com.svlada.entity.Serie;
+import com.svlada.entity.User;
 import java.util.List;
 
 /**
@@ -23,8 +24,8 @@ public interface ISerieService {
     
     // USER ////////////////////////////////////////////////////////////////////
     
-    List<Serie> getAllSeriesByPaisUser(String pais, long idUser);
+    List<Serie> getAllSeriesByPaisUser(String pais, User user);
     
-    List<Serie> getAllSeriesByAnoUser(int ano, long idUser);
+    List<Serie> getAllSeriesByAnoUser(int ano, User user);
 
 }
